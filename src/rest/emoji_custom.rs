@@ -71,3 +71,23 @@ impl FromResponse for CreateRequest {
 	response.json().unwrap()
     }
 }
+
+#[derive(Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct DeleteRequest {
+    emoji_id: String
+}
+
+impl IntoRequest for DeleteRequest {
+    fn into_request(self, b: &impl AuthenticatedBuildRequestBuilder) -> Request {
+	b.post("api/v1/emoji-custom.delete").json(&self).build().unwrap()
+    }
+}
+
+impl FromResponse for DeleteRequest {
+    type Output = WithSuccess<()>;
+
+    fn from_response(response: Response) -> Option<Self::Output> {
+	response.json().unwrap()
+    }
+}
