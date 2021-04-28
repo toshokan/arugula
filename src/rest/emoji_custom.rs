@@ -91,3 +91,29 @@ impl FromResponse for DeleteRequest {
 	response.json().unwrap()
     }
 }
+
+#[derive(Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct UpdateRequest {
+    #[serde(rename="_id")]
+    id: String,
+    #[serde(skip_serializing_if="Option::is_none")]
+    emoji: Option<Vec<u8>>,
+    name: String,
+    #[serde(skip_serializing_if="Option::is_none")]
+    aliases: Option<Vec<String>>
+}
+
+impl IntoRequest for UpdateRequest {
+    fn into_request(self, b: &impl AuthenticatedBuildRequestBuilder) -> Request {
+	b.post("api/v1/emoji-custom.update").form(&self).build().unwrap()
+    }
+}
+
+impl FromResponse for UpdateRequest {
+    type Output = WithSuccess<()>;
+
+    fn from_response(response: Response) -> Option<Self::Output> {
+	response.json().unwrap()
+    }
+}
