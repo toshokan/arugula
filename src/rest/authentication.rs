@@ -1,11 +1,11 @@
 use reqwest::blocking::{Request, Response};
 use serde::{Deserialize, Serialize};
 
-use super::{BuildRequestBuilder, FromResponse, IntoAnonymousRequest, IntoRequest, WithSuccess};
+use super::{AuthenticatedBuildRequestBuilder, BuildRequestBuilder, FromResponse, IntoAnonymousRequest, IntoRequest};
 
 #[derive(Serialize)]
 #[serde(untagged)]
-pub enum AuthenticationRequest {
+pub enum LoginRequest {
     Credentials {
 	user: String,
 	password: String
@@ -14,19 +14,19 @@ pub enum AuthenticationRequest {
 }
 
 #[derive(Deserialize)]
-pub struct AuthenticationResponse {
+pub struct LoginResponse {
     status: String,
-    pub(crate) data: AuthenticationResponseData
+    pub(crate) data: LoginResponseData
 }
 
 #[derive(Deserialize)]
 #[serde(rename_all="camelCase")]
-pub struct AuthenticationResponseData {
+pub struct LoginResponseData {
     pub(crate) auth_token: String,
     pub(crate) user_id: String,
 }
 
-impl IntoAnonymousRequest for AuthenticationRequest {
+impl IntoAnonymousRequest for LoginRequest {
     fn into_anonymous_request(self, b: &impl BuildRequestBuilder) -> Request {
 	b.post_anonymous("/api/v1/login")
 	    .json(&self)
@@ -35,11 +35,26 @@ impl IntoAnonymousRequest for AuthenticationRequest {
     }
 }
 
-impl FromResponse for AuthenticationRequest {
-    type Output = AuthenticationResponse;
+impl FromResponse for LoginRequest {
+    type Output = LoginResponse;
 
     fn from_response(response: Response) -> Option<Self::Output> {
 	response.json().unwrap()
     }
 }
 
+pub struct LogoutRequest;
+
+impl IntoRequest for LogoutRequest {
+    fn into_request(self, b: &impl AuthenticatedBuildRequestBuilder) -> Request {
+	b.post("/api/v1/logout").build().unwrap()
+    }
+}
+
+impl FromResponse for LogoutRequest {
+    type Output = ();
+    
+    fn from_response(_response: Response) -> Option<Self::Output> {
+	Some(())
+    }
+}

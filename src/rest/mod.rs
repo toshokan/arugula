@@ -81,6 +81,11 @@ impl AuthenticatedClient {
 	let resp = self.inner.client.execute(req).unwrap();
 	T::from_response(resp).unwrap()
     }
+
+    pub fn logout(self, logout: authentication::LogoutRequest) -> Client {
+	let _ = self.request(logout);
+	self.inner
+    }
 }
 
 impl BuildRequestBuilder for Client {
@@ -133,7 +138,7 @@ impl Client {
 	T::from_response(resp).unwrap()
     }
 
-    pub fn authenticate(self, auth: authentication::AuthenticationRequest) -> AuthenticatedClient {
+    pub fn authenticate(self, auth: authentication::LoginRequest) -> AuthenticatedClient {
 	let resp = self.request(auth);
 	let credentials = Credentials {
 	    token: resp.data.auth_token,
