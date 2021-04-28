@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 
 use reqwest::blocking::{Request, Response};
-use super::{FromResponse, IntoRequest, WithSuccess, AuthenticatedBuildRequestBuilder};
+use super::{AuthenticatedBuildRequestBuilder, Changeset, FromResponse, IntoRequest, WithSuccess};
 
 #[derive(Debug)]
 #[derive(Deserialize)]
@@ -24,15 +24,8 @@ pub struct NewEmoji {
 
 #[derive(Debug)]
 #[derive(Deserialize)]
-pub struct EmojiResponseSets {
-    update: Vec<EmojiData>,
-    remove: Vec<EmojiData>
-}
-
-#[derive(Debug)]
-#[derive(Deserialize)]
 pub struct EmojiResponseData {
-    emojis: EmojiResponseSets
+    emojis: Changeset<EmojiData>
 }
 
 pub struct ListRequest;

@@ -45,6 +45,13 @@ pub struct WithSuccess<T> {
     body: T
 }
 
+#[derive(Debug)]
+#[derive(Deserialize)]
+pub struct Changeset<T> {
+    update: Vec<T>,
+    remove: Vec<T>
+}
+
 pub struct Credentials {
     pub token: String,
     pub user_id: String
