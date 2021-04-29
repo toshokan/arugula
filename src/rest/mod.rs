@@ -1,6 +1,7 @@
 pub mod authentication;
 pub mod misc;
 pub mod emoji_custom;
+pub mod subscriptions;
 
 use std::cell::RefCell;
 use serde::{Serialize, Deserialize};
