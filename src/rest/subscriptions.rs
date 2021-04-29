@@ -48,3 +48,30 @@ impl FromResponse for GetRequest {
 	response.json().unwrap()
     }
 }
+
+#[derive(Debug)]
+#[derive(Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct GetOneRequest {
+    pub room_id: String
+}
+
+#[derive(Debug)]
+#[derive(Deserialize)]
+pub struct GetOneResponse {
+    subscription: Option<SubscriptionData>
+}
+
+impl IntoRequest for GetOneRequest {
+    fn into_request(self, b: &impl AuthenticatedBuildRequestBuilder) -> Request {
+	b.get("api/v1/subscriptions.getOne").query(&self).build().unwrap()
+    }
+}
+
+impl FromResponse for GetOneRequest {
+    type Output = WithSuccess<GetOneResponse>;
+
+    fn from_response(response: Response) -> Option<Self::Output> {
+	response.json().unwrap()
+    }
+}
