@@ -5,31 +5,31 @@ A Rust library for the RocketChat API.
 ## REST API coverage
 
  - [X] Miscellaneous Information
- - [] Assets
- - [] AutoTranslate
+ - [ ] Assets
+ - [ ] AutoTranslate
  - [X] Authentication
- - [] Users
- - [] Channels
- - [] Groups
- - [] Chat
- - [] Custom Sounds
- - [] IM
- - [] Integrations
- - [] Invites
- - [] Livechat
- - [] OAuthApps
- - [] Permissions
- - [] Roles
- - [] Push Token
- - [] Rooms
- - [] Command Methods
- - [] Custom User Status
+ - [ ] Users
+ - [ ] Channels
+ - [ ] Groups
+ - [ ] Chat
+ - [ ] Custom Sounds
+ - [ ] IM
+ - [ ] Integrations
+ - [ ] Invites
+ - [ ] Livechat
+ - [ ] OAuthApps
+ - [ ] Permissions
+ - [ ] Roles
+ - [ ] Push Token
+ - [ ] Rooms
+ - [ ] Command Methods
+ - [ ] Custom User Status
  - [X] Emoji Custom
- - [] Settings
+ - [ ] Settings
  - [X] Subscriptions
- - [] Video Conference
- - [] Webdav
- - [] Licenses
+ - [ ] Video Conference
+ - [ ] Webdav
+ - [ ] Licenses
 
 ## Realtime API
 Not yet.
