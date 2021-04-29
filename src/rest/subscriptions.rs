@@ -96,3 +96,24 @@ impl FromResponse for ReadRequest {
 	response.json().unwrap()
     }
 }
+
+#[derive(Debug)]
+#[derive(Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct UnreadRequest {
+    pub room_id: String
+}
+
+impl IntoRequest for UnreadRequest {
+    fn into_request(self, b: &impl AuthenticatedBuildRequestBuilder) -> Request {
+	b.get("api/v1/subscriptions.unread").json(&self).build().unwrap()
+    }
+}
+
+impl FromResponse for UnreadRequest {
+    type Output = WithSuccess<()>;
+
+    fn from_response(response: Response) -> Option<Self::Output> {
+	response.json().unwrap()
+    }
+}
